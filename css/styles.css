@@ -11188,7 +11188,7 @@ p {
 #mainNav {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #212529;
+  background-color: #253779; /* Azul oscuro */
 }
 #mainNav .navbar-toggler {
   padding: 0.75rem;
@@ -11246,12 +11246,12 @@ p {
     "Segoe UI Symbol",
     "Noto Color Emoji";
   font-size: 0.95rem;
-  color: #fff;
+  color: #253779;
   letter-spacing: 0.0625em;
 }
 #mainNav .navbar-nav .nav-item .nav-link.active,
 #mainNav .navbar-nav .nav-item .nav-link:hover {
-  color: #ffc800;
+  color: #e30613;
 }
 
 @media (min-width: 992px) {
@@ -11275,7 +11275,7 @@ p {
   #mainNav.navbar-shrink {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    background-color: gray;
+    background-color: #f8f9fa;
   }
   #mainNav.navbar-shrink .navbar-brand {
     font-size: 1.25em;
@@ -11791,4 +11791,30 @@ section#contact form#contactForm :-ms-input-placeholder {
     "Segoe UI Emoji",
     "Segoe UI Symbol",
     "Noto Color Emoji";
+}
+/* Estilo personalizado para el carrusel de tamaño reducido */
+.small-carousel {
+  max-width: 400px; /* Cambia esto al tamaño que prefieras */
+  margin: 0 auto; /* Para centrar el carrusel */
+}
+.carousel-inner img {
+  width: 100%;    /* Asegura que las imágenes ocupen todo el ancho del contenedor */
+  height: 500px;  /* Ajusta este valor para definir una altura fija */
+  object-fit: cover;  /* Mantiene las proporciones de la imagen y recorta si es necesario */
+}
+/* Fondo muy suave para Servicios */
+#portfolio {
+  background-color: #f8f9fa; /* Gris claro */
+}
+
+/* Fondo blanco para Clientes */
+#clients {
+  background-color: #ffffff; /* Blanco puro */
+}
+
+/* Fondo gris suave para Alianzas */
+#alliances {
+  background-color: #f0f0f0; /* Otro gris muy claro */
+}
+
 }
