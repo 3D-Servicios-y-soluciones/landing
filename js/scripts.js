@@ -1,54 +1,83 @@
 /*!
-* Start Bootstrap - Agency v7.0.12 (https://startbootstrap.com/theme/agency)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
+ * 3D Group — comportamiento mínimo de la página.
+ * Kit de marca v1.0: un solo momento de movimiento (la franja diagonal
+ * al cargar, resuelto en CSS). Aquí sólo navegación y estado.
+ */
+(function () {
+  "use strict";
 
-window.addEventListener('DOMContentLoaded', event => {
+  var nav = document.getElementById("nav");
+  var toggle = document.getElementById("navToggle");
+  var menu = document.getElementById("navMenu");
 
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
-            return;
-        }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
-        }
+  /* --- Menú móvil ------------------------------------------------------- */
+  function closeMenu() {
+    menu.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir menú");
+  }
 
-    };
-
-    // Shrink the navbar 
-    navbarShrink();
-
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
-
-    //  Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
-    if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
-            target: '#mainNav',
-            rootMargin: '0px 0px -40%',
-        });
-    };
-
-    // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
-    const responsiveNavItems = [].slice.call(
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    );
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
-            }
-        });
+  if (toggle && menu) {
+    toggle.addEventListener("click", function () {
+      var open = menu.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
     });
 
-});
+    menu.addEventListener("click", function (e) {
+      if (e.target.closest("a")) closeMenu();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu.classList.contains("is-open")) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+  }
+
+  /* --- Nav compacta al hacer scroll ------------------------------------- */
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      nav.classList.toggle("is-scrolled", window.scrollY > 40);
+      ticking = false;
+    });
+  }
+  if (nav) {
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* --- Enlace activo según la sección visible --------------------------- */
+  var links = Array.prototype.slice.call(
+    document.querySelectorAll('.nav__menu ul a[href^="#"]')
+  );
+  var sections = links
+    .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+    .filter(Boolean);
+
+  if (sections.length && "IntersectionObserver" in window) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (a) {
+            a.classList.toggle(
+              "is-active",
+              a.getAttribute("href") === "#" + entry.target.id
+            );
+          });
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  /* --- Año en el footer -------------------------------------------------- */
+  var anio = document.getElementById("anio");
+  if (anio) anio.textContent = new Date().getFullYear();
+})();

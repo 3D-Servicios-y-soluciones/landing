@@ -1,338 +1,395 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>3D Group</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D Group · Aseo corporativo profesional en Santiago</title>
+    <meta name="description"
+        content="Aseo corporativo para empresas, oficinas, edificios, condominios y bodegas. Personal contratado, uniformado y con EPP. Cumplimiento 100% de la normativa laboral chilena." />
+    <meta name="author" content="3D Servicios y Soluciones SpA" />
+    <meta name="theme-color" content="#27367B" />
+    <link rel="canonical" href="https://www.3dgroup.cl/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content="3D Group" />
+    <meta property="og:title" content="3D Group · Aseo corporativo profesional" />
+    <meta property="og:description"
+        content="Co-creamos entornos laborales seguros y de alto desempeño. Aseo corporativo con disciplina operativa y cumplimiento normativo." />
+    <meta property="og:url" content="https://www.3dgroup.cl/" />
+    <meta property="og:image" content="https://www.3dgroup.cl/assets/img/proyecto1.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="assets/img/favicon-256.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+
+    <!-- Montserrat: única familia de la marca -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="assets/img/logo.png" alt="..." /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#clients">Clientes</a> <!-- Nuevo botón de "Clientes" -->
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#alliances">Alianzas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contacto</a>
-                    </li>
-                </ul>                
-            </div>
-        </div>
-    </nav>
+<body id="inicio">
 
-    <!-- Masthead-->
-    <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">
-                Co creamos espacios limpios y seguros para la tranquilidad de tus personas.
-            </div>
+    <!-- Motivo diagonal: símbolo reutilizable (celeste · navy · rojo) -->
+    <svg width="0" height="0" class="svg-sprite" aria-hidden="true" focusable="false">
+        <symbol id="franja" viewBox="0 0 25 12">
+            <path class="f1" d="M6 0 H11 L5 12 H0 Z" />
+            <path class="f2" d="M13 0 H18 L12 12 H7 Z" />
+            <path class="f3" d="M20 0 H25 L19 12 H14 Z" />
+        </symbol>
+    </svg>
+
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+        <div class="shell nav__inner">
+            <a class="nav__brand" href="#inicio" aria-label="3D Group · Inicio">
+                <img src="assets/img/logo-blanco.png" alt="3D Group" width="2460" height="434" />
+            </a>
+
+            <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false"
+                aria-controls="navMenu" aria-label="Abrir menú">
+                <span class="nav__burger" aria-hidden="true"></span>
+            </button>
+
+            <nav class="nav__menu" id="navMenu" aria-label="Principal">
+                <ul>
+                    <li><a href="#empresa">Empresa</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#operaciones">Operaciones</a></li>
+                    <li><a href="#alianzas">Alianzas</a></li>
+                </ul>
+                <a class="btn btn--ghost-light nav__cta" href="#contacto">Cotiza tu servicio</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Portfolio Grid-->
-    <section class="page-section" id="portfolio">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">
-                    Servicios
-                </h2>
-                <h3 class="section-subheading text-muted">
-                    <!-- Lorem ipsum dolor sit amet consectetur. -->
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 1-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="assets/img/services/aseo.png" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">
-                                Aseo
-                            </div>
-                            <div class="portfolio-caption-subheading text-muted">
-                                industrial/corporativo
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 2-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" style="height: 17.35em;" src="assets/img/services/seguridad.png"
-                                alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">
-                                Seguridad
-                            </div>
-                            <div class="portfolio-caption-subheading text-muted">
-                                guardias, conserjes y vigilantes
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 3-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="assets/img/services/electricidad.jpg" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">
-                                Electricidad
-                            </div>
-                            <div class="portfolio-caption-subheading text-muted">
-                                mantenimiento preventivo/correctivo
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <main id="contenido">
 
-    <section class="page-section" id="clients">
-        <div class="container small-carousel">
-            <div id="workCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="assets/img/proyecto1.png" class="d-block w-100" alt="Trabajo 1">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Limpieza de vidrios en altura</h5>
-                            <p>Cliente: Strip Center San Joaquin</p>
+        <!-- ============ HERO ============ -->
+        <section class="hero">
+            <div class="hero__grid">
+                <div class="hero__text">
+                    <div class="hero__textInner">
+                        <p class="eyebrow eyebrow--light reveal">
+                            <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                            <span>3D Servicios y Soluciones SpA</span>
+                        </p>
+                        <h1>Co-creamos entornos laborales seguros y de alto desempeño.</h1>
+                        <p class="hero__lead">
+                            Aseo corporativo profesional para empresas, oficinas, edificios, condominios
+                            y bodegas. La misma disciplina operativa y cumplimiento normativo que
+                            aplicamos en todas nuestras líneas de capital humano.
+                        </p>
+                        <div class="btn-row">
+                            <a class="btn btn--rojo" href="#contacto">Cotiza tu servicio</a>
+                            <a class="btn btn--ghost-light" href="#servicios">Conoce más</a>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/proyecto2.png" class="d-block w-100" alt="Trabajo 2">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Personal de limpieza</h5>
-                            <p>Cliente: Edificio San Miguel.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="assets/img/proyecto3.png" class="d-block w-100" alt="Trabajo 3">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Barrido en edificio</h5>
-                            <p>Cliente: Edificio San Miguel</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#workCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#workCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-    </section>
-    
-
-    <!-- Clients-->
-    <section class="page-section
-    " id="alliances">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">
-                    Alianzas
-                </h2>
-            </div>
-            <div class="row align-items-center" style="justify-content: center;">
-                <div class="col-md-3 col-sm-6 my-3">
-                    <a href="#!">
-                        <img class="img-fluid img-brand d-block mx-auto" src="assets/img/alliances/Defontana.png"
-                            alt="..." aria-label="Defontana Logo" />
-                    </a>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact-->
-    <section class="page-section" id="contact">
-        <div class="container">
-            <div class="text-center">
-                <p class="section-heading text-uppercase" style="font-size: 2rem; font-weight: bolder;">
-                    Contáctanos
-                </p>
-                <p class="section-subheading text-muted">
-                    <a href="mailto:contacto@cronoit.cl" style="font-size: 2rem; color: rgb(44, 141, 185);"
-                        aria-label="correo electrónico">
-                        contacto@3dgroup.cl
-                    </a>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer-->
-    <footer class="footer py-4">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 text-lg-start">Copyright &copy; 3D Group 2024</div>
-                <div class="col-lg-4 my-3 my-lg-0">
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
-                            class="fab fa-twitter"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/company/3dgroup-chile" aria-label="LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
+                <div class="hero__media">
+                    <img src="assets/img/proyecto3.png"
+                        alt="Colaborador de 3D Group uniformado realizando mantención de superficies en un edificio"
+                        width="1163" height="1280" fetchpriority="high" />
                 </div>
-                <!-- <div class="col-lg-4 text-lg-end">
-                    <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-                </div> -->
             </div>
+        </section>
+
+        <!-- ============ POSICIONAMIENTO ============ -->
+        <section class="section" id="empresa">
+            <div class="shell">
+                <div class="lede">
+                    <p class="eyebrow">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Posicionamiento</span>
+                    </p>
+                    <h2>Aseo corporativo, como socio estratégico.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                    <p class="lede__body">
+                        3D Group entrega aseo profesional a empresas y espacios de trabajo, con la misma
+                        disciplina operativa y cumplimiento normativo que aplicamos en todas nuestras
+                        líneas de capital humano. No competimos por ser los más baratos: competimos por
+                        continuidad operacional, orden y confianza de largo plazo.
+                    </p>
+                </div>
+
+                <ul class="segmentos">
+                    <li>Oficinas y empresas</li>
+                    <li>Edificios corporativos</li>
+                    <li>Condominios</li>
+                    <li>Bodegas</li>
+                    <li>Strip centers</li>
+                </ul>
+
+                <div class="pilares">
+                    <article class="pilar">
+                        <h3>Aseo integral</h3>
+                        <p>Personal de aseo, aseo general, vidrieros en altura y vacuolavado, con
+                            supervisión especializada.</p>
+                    </article>
+                    <article class="pilar">
+                        <h3>Cumplimiento 100%</h3>
+                        <p>Normativa laboral chilena y ley de subcontratación como no-negociable.
+                            Personal contratado, uniformado y con EPP.</p>
+                    </article>
+                    <article class="pilar">
+                        <h3>Continuidad operacional</h3>
+                        <p>Reportería, mejora continua y respuesta on demand para que tu operación
+                            nunca se detenga.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ LAS 3 D ============ -->
+        <section class="section section--navy tresd">
+            <div class="shell">
+                <div class="lede lede--light">
+                    <p class="eyebrow eyebrow--light">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>La esencia de marca</span>
+                    </p>
+                    <h2>Nuestro nombre es nuestra promesa: las 3&nbsp;D.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                    <p class="lede__body">
+                        Los valores no se declaran, se demuestran. Cada D es un estándar verificable
+                        en terreno.
+                    </p>
+                </div>
+
+                <ol class="tresd__list">
+                    <li>
+                        <span class="tresd__num" aria-hidden="true">1D</span>
+                        <h3>Dedicación</h3>
+                        <p>Compromiso con la excelencia en el servicio al cliente, todos los días.</p>
+                    </li>
+                    <li>
+                        <span class="tresd__num" aria-hidden="true">2D</span>
+                        <h3>Disciplina</h3>
+                        <p>Altos estándares tanto en la capacitación como en la ejecución diaria.</p>
+                    </li>
+                    <li>
+                        <span class="tresd__num" aria-hidden="true">3D</span>
+                        <h3>Desempeño</h3>
+                        <p>Resultados consistentes que cumplen y superan las expectativas del cliente.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ============ SERVICIOS ============ -->
+        <section class="section section--gris" id="servicios">
+            <div class="shell">
+                <div class="lede">
+                    <p class="eyebrow">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Nuestros servicios</span>
+                    </p>
+                    <h2>Capital humano para tus espacios clave.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                </div>
+
+                <div class="servicios">
+                    <article class="servicio">
+                        <h3>Aseo corporativo</h3>
+                        <p>Aseo profesional para empresas y espacios de trabajo, con maquinaria
+                            especializada y supervisión en terreno.</p>
+                        <ul class="servicio__items">
+                            <li>Personal de aseo</li>
+                            <li>Aseo general</li>
+                            <li>Vidrieros en altura</li>
+                            <li>Vacuolavado</li>
+                            <li>Supervisión especializada</li>
+                        </ul>
+                    </article>
+
+                    <article class="servicio">
+                        <h3>Seguridad</h3>
+                        <p>Personal certificado para el control y resguardo de tus espacios comunes.</p>
+                        <ul class="servicio__items">
+                            <li>Guardias</li>
+                            <li>Conserjes</li>
+                            <li>Vigilantes</li>
+                        </ul>
+                    </article>
+
+                    <article class="servicio">
+                        <h3>Electricidad</h3>
+                        <p>Mantenimiento preventivo y correctivo para el funcionamiento continuo de
+                            tus instalaciones.</p>
+                        <ul class="servicio__items">
+                            <li>Mantenimiento preventivo</li>
+                            <li>Mantenimiento correctivo</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="servicios__foot">
+                    <p>¿Necesitas una combinación de servicios para tu operación?</p>
+                    <a class="btn btn--navy" href="#contacto">Contáctanos</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ OPERACIONES ============ -->
+        <section id="operaciones">
+            <div class="shell">
+                <div class="lede lede--top">
+                    <p class="eyebrow">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Operaciones reales</span>
+                    </p>
+                    <h2>Personas reales, operaciones reales.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                    <p class="lede__body">
+                        Nuestros propios colaboradores, uniformados y con EPP, en terreno.
+                    </p>
+                </div>
+            </div>
+
+            <article class="bloque">
+                <div class="bloque__media">
+                    <img src="assets/img/proyecto1.png"
+                        alt="Limpieza de vidrios en altura con brazo elevador en un strip center"
+                        width="720" height="1280" loading="lazy" />
+                </div>
+                <div class="bloque__text">
+                    <p class="eyebrow eyebrow--light">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Vidrieros en altura</span>
+                    </p>
+                    <h3>Limpieza de vidrios en altura</h3>
+                    <p>Trabajo en altura con equipo elevador y personal certificado, coordinado para
+                        no interrumpir la operación comercial.</p>
+                    <p class="bloque__meta">Cliente · Strip Center San Joaquín</p>
+                </div>
+            </article>
+
+            <article class="bloque bloque--flip">
+                <div class="bloque__media">
+                    <img src="assets/img/proyecto2.png"
+                        alt="Colaborador de 3D Group operando una barredora en los exteriores de un edificio"
+                        width="960" height="1280" loading="lazy" />
+                </div>
+                <div class="bloque__text">
+                    <p class="eyebrow eyebrow--light">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Personal de aseo</span>
+                    </p>
+                    <h3>Barrido mecanizado de exteriores</h3>
+                    <p>Rutinas diarias con maquinaria especializada en accesos, circulaciones y
+                        áreas comunes del edificio.</p>
+                    <p class="bloque__meta">Cliente · Edificio San Miguel</p>
+                </div>
+            </article>
+
+            <article class="bloque">
+                <div class="bloque__media">
+                    <img src="assets/img/proyecto3.png"
+                        alt="Colaborador de 3D Group realizando mantención de pavimentos en área común"
+                        width="1163" height="1280" loading="lazy" />
+                </div>
+                <div class="bloque__text">
+                    <p class="eyebrow eyebrow--light">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Aseo general</span>
+                    </p>
+                    <h3>Mantención de superficies y áreas comunes</h3>
+                    <p>Lavado y mantención de pavimentos en espacios comunes, con supervisión y
+                        reportería del avance.</p>
+                    <p class="bloque__meta">Cliente · Edificio San Miguel</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- ============ ALIANZAS ============ -->
+        <section class="section section--gris" id="alianzas">
+            <div class="shell">
+                <div class="lede lede--center">
+                    <p class="eyebrow">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Alianzas</span>
+                    </p>
+                    <h2>Con quiénes trabajamos.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                </div>
+                <ul class="alianzas">
+                    <li>
+                        <img src="assets/img/alliances/Defontana.png" alt="Defontana" loading="lazy" />
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ CONTACTO ============ -->
+        <section class="section section--navy contacto" id="contacto">
+            <div class="shell contacto__grid">
+                <div>
+                    <p class="eyebrow eyebrow--light">
+                        <svg class="franja" viewBox="0 0 25 12" aria-hidden="true"><use href="#franja" /></svg>
+                        <span>Contacto</span>
+                    </p>
+                    <h2>Conversemos sobre tu operación.</h2>
+                    <span class="rule-rojo" aria-hidden="true"></span>
+                    <p class="lede__body">
+                        Cuéntanos qué necesitas y te preparamos una propuesta a la medida de tus
+                        espacios.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn btn--rojo"
+                            href="mailto:contacto@3dgroup.cl?subject=Cotizaci%C3%B3n%20de%20servicio%20%C2%B7%203D%20Group">Cotiza
+                            tu servicio</a>
+                    </div>
+                </div>
+
+                <ul class="datos">
+                    <li>
+                        <span class="datos__k">Correo</span>
+                        <a href="mailto:contacto@3dgroup.cl">contacto@3dgroup.cl</a>
+                    </li>
+                    <li>
+                        <span class="datos__k">Dirección</span>
+                        <span>Eulogia Sánchez 065, Providencia<br />Santiago, Chile</span>
+                    </li>
+                    <li>
+                        <span class="datos__k">LinkedIn</span>
+                        <a href="https://www.linkedin.com/company/3dgroup-chile" target="_blank"
+                            rel="noopener">3D Group Chile</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="shell footer__inner">
+            <img class="footer__logo" src="assets/img/logo-blanco.png" alt="3D Group" width="2460"
+                height="434" loading="lazy" />
+            <p class="footer__legal">
+                3D Servicios y Soluciones SpA · Eulogia Sánchez 065, Providencia, Santiago<br />
+                &copy; <span id="anio">2026</span> 3D Group. Todos los derechos reservados.
+            </p>
+            <a class="footer__social" href="https://www.linkedin.com/company/3dgroup-chile"
+                target="_blank" rel="noopener" aria-label="3D Group en LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                        d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21H9z" />
+                </svg>
+            </a>
         </div>
     </footer>
 
-    <!-- Portfolio Modals-->
-    <!-- Portfolio item 1 modal popup-->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="modal-body">
-                                <!-- Project details-->
-                                <h2 class="text-uppercase">
-                                    aseo
-                                </h2>
-                                <img class="img-fluid d-block mx-auto" src="assets/img/services/aseo.png" alt="..." />
-                                <p>
-                                    Utilizamos maquinaria especializada para y por la limpieza y mantención de tus
-                                    espacios comunes con profesionales
-                                    cualificados para ofrecer la mejor experiencia en comunidades, edificios,
-                                    centros comerciales e instituciones.
-                                </p>
-
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
-                                    <i class="fas fa-xmark me-1"></i>
-                                    cerrar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio item 2 modal popup-->
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="modal-body">
-                                <!-- Project details-->
-                                <h2 class="text-uppercase">
-                                    seguridad
-                                </h2>
-                                <img class="img-fluid d-block mx-auto" src="assets/img/services/seguridad.png"
-                                    alt="..." />
-                                <p>
-                                    Contamos con profesionales cualificados y certificados para velar por la seguridad
-                                    de tus espacios comunes.
-                                </p>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
-                                    <i class="fas fa-xmark me-1"></i>
-                                    cerrar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio item 3 modal popup-->
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
-                        alt="Close modal" /></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="modal-body">
-                                <!-- Project details-->
-                                <h2 class="text-uppercase">
-                                    electricidad
-                                </h2>
-                                <img class="img-fluid d-block mx-auto" src="assets/img/services/electricidad.jpg"
-                                    alt="..." />
-                                <p>
-                                    Realizamos mantenimiento preventivo y correctivo para velar por el funcionamiento en
-                                    tus espacios comunes.
-                                </p>
-                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"
-                                    type="button">
-                                    <i class="fas fa-xmark me-1"></i>
-                                    cerrar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 </body>
 
