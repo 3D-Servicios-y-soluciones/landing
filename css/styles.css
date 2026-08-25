@@ -296,13 +296,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav__menu {
   display: flex;
   align-items: center;
-  gap: 2.25rem;
+  gap: 1.75rem;
   margin-left: auto;
 }
 .nav__menu ul {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.6rem;
 }
 .nav__menu a {
   color: rgba(255, 255, 255, 0.86);
@@ -314,7 +314,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   border-bottom: 2px solid transparent;
 }
 .nav__menu ul a:hover,
-.nav__menu ul a.is-active {
+.nav__menu ul a.is-active,
+.nav__menu ul a[aria-current="page"] {
   color: var(--blanco);
   border-bottom-color: var(--celeste);
   text-decoration: none;
@@ -625,36 +626,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .alianzas img { max-height: 46px; width: auto; }
 
 /* --------------------------------------------------------------------------
-   14. Contacto
-   -------------------------------------------------------------------------- */
-.contacto__grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
-}
-
-.datos { border-top: 1px solid rgba(255, 255, 255, 0.2); }
-.datos li {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 1rem;
-  padding-block: 1.1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.95rem;
-}
-.datos__k {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--celeste);
-  padding-top: 0.28rem;
-}
-.datos a { color: var(--blanco); font-weight: 600; }
-.datos a:hover { color: var(--celeste); }
-
-/* --------------------------------------------------------------------------
    15. Footer
    -------------------------------------------------------------------------- */
 .footer {
@@ -676,6 +647,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   line-height: 1.7;
   flex: 1 1 260px;
 }
+.footer a { color: rgba(255, 255, 255, 0.82); }
+.footer a:hover { color: var(--celeste); }
 
 .footer__social {
   display: grid;
@@ -691,7 +664,252 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer__social:hover { background: var(--celeste); border-color: var(--celeste); }
 
 /* --------------------------------------------------------------------------
-   16. Responsive
+   16. Cabecera de página interior
+   -------------------------------------------------------------------------- */
+.page-hero {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.82);
+  padding-top: calc(76px + clamp(3rem, 6vw, 5rem));
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::after {
+  content: "";
+  position: absolute;
+  top: -18%;
+  right: -3%;
+  width: min(34%, 380px);
+  aspect-ratio: 25 / 12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25 12'%3E%3Cpath d='M6 0H11L5 12H0Z' fill='%2378acdc'/%3E%3Cpath d='M13 0H18L12 12H7Z' fill='%2378acdc'/%3E%3Cpath d='M20 0H25L19 12H14Z' fill='%2378acdc'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.page-hero h1 { color: var(--blanco); max-width: 20ch; }
+.page-hero .lede__body { max-width: 58ch; font-size: 1.05rem; }
+.page-hero .rule-rojo { margin-bottom: 1.5rem; }
+
+/* --------------------------------------------------------------------------
+   17. Botón flotante de WhatsApp
+   -------------------------------------------------------------------------- */
+.wa {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.75rem);
+  bottom: clamp(1rem, 3vw, 1.75rem);
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  background: #25d366;
+  color: #0b3d22;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.22);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+.wa:hover { background: #1eb857; text-decoration: none; transform: translateY(-1px); }
+.wa svg { width: 22px; height: 22px; fill: #0b3d22; flex: none; }
+.wa__label { white-space: nowrap; }
+
+/* --------------------------------------------------------------------------
+   18. Checklist · lo que dejas de administrar
+   -------------------------------------------------------------------------- */
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0 2.5rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.checklist li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  padding-block: 0.95rem;
+  border-bottom: 1px solid var(--gris-borde);
+}
+/* El marcador ocupa la primera columna en ambas filas; título y descripción
+   comparten la segunda. Sin esto, el <span> cae en la columna del marcador
+   y la ensancha. */
+.checklist li::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 11px;
+  height: 11px;
+  margin-top: 0.42rem;
+  background: var(--celeste);
+  clip-path: polygon(38% 0, 100% 0, 62% 100%, 0 100%);
+}
+.checklist strong {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.97rem;
+}
+.checklist span {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 0.9rem;
+}
+
+.section--navy .checklist li { border-bottom-color: rgba(255, 255, 255, 0.18); }
+.section--navy .checklist strong { color: var(--blanco); }
+
+/* --------------------------------------------------------------------------
+   19. Pasos numerados (secuencia real)
+   -------------------------------------------------------------------------- */
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  background: var(--gris-borde);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radius);
+}
+.pasos li {
+  background: var(--blanco);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border-top: 3px solid var(--celeste);
+}
+.pasos__n {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.19em;
+  color: var(--rojo);
+  margin-bottom: 0.9rem;
+}
+.pasos h3 { margin-bottom: 0.5em; }
+.pasos p { font-size: 0.92rem; }
+
+/* --------------------------------------------------------------------------
+   20. Factores de precio · qué incluye
+   -------------------------------------------------------------------------- */
+.factores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+}
+.factor {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-left: 4px solid var(--celeste);
+  border-radius: var(--radius);
+  padding: clamp(1.4rem, 2.4vw, 1.9rem);
+}
+.factor h3 { margin-bottom: 0.5em; }
+.factor p { font-size: 0.92rem; }
+
+.incluye {
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  background: var(--navy);
+  border-radius: var(--radius);
+  color: rgba(255, 255, 255, 0.82);
+  position: relative;
+  overflow: hidden;
+}
+.incluye h3 { color: var(--blanco); margin-bottom: 0.4em; }
+.incluye > p { font-size: 0.95rem; max-width: 62ch; }
+.incluye .checklist { margin-top: 1.5rem; }
+.incluye .checklist li { border-bottom-color: rgba(255, 255, 255, 0.18); }
+.incluye .checklist strong { color: var(--blanco); }
+
+/* --------------------------------------------------------------------------
+   21. Banda de llamada a la acción
+   -------------------------------------------------------------------------- */
+.cta-band {
+  background: var(--navy-900);
+  color: rgba(255, 255, 255, 0.82);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  position: relative;
+  overflow: hidden;
+}
+.cta-band h2 { color: var(--blanco); }
+.cta-band__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem 3rem;
+}
+.cta-band__text { max-width: 52ch; }
+.cta-band .btn-row { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   22. Formulario de contacto
+   -------------------------------------------------------------------------- */
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1rem;
+}
+.form__field { display: flex; flex-direction: column; gap: 0.45rem; }
+.form__field--full { grid-column: 1 / -1; }
+
+.form label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.form input,
+.form select,
+.form textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--negro);
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  width: 100%;
+}
+.form textarea { resize: vertical; min-height: 130px; }
+.form input:focus,
+.form select:focus,
+.form textarea:focus { border-color: var(--celeste); }
+
+.form__note {
+  grid-column: 1 / -1;
+  font-size: 0.82rem;
+  margin: 0;
+}
+.form .btn { grid-column: 1 / -1; justify-self: start; }
+
+/* --------------------------------------------------------------------------
+   23. Contacto: canales
+   -------------------------------------------------------------------------- */
+.canales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.canal {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-top: 3px solid var(--celeste);
+  border-radius: var(--radius);
+  padding: clamp(1.4rem, 2.4vw, 1.9rem);
+}
+.canal h3 { margin-bottom: 0.4em; }
+.canal p { font-size: 0.92rem; margin-bottom: 0.8em; }
+.canal a { font-weight: 600; word-break: break-word; }
+
+/* --------------------------------------------------------------------------
+   24. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 960px) {
   html { scroll-padding-top: 80px; }
@@ -745,12 +963,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .bloque--flip .bloque__text { grid-column: 1; grid-row: auto; }
   .bloque__media { min-height: clamp(240px, 56vw, 380px); }
 
-  .contacto__grid { grid-template-columns: 1fr; }
+  .nav__menu ul a[aria-current="page"] { border-bottom-color: var(--celeste); }
+
+  .cta-band__inner { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 560px) {
-  .datos li { grid-template-columns: 1fr; gap: 0.3rem; }
-  .datos__k { padding-top: 0; }
+  .form { grid-template-columns: 1fr; }
+
+  /* En pantallas chicas el botón de WhatsApp se reduce al ícono */
+  .wa { padding: 0.9rem; }
+  .wa__label { display: none; }
   .servicios__foot { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
   .btn-row { flex-direction: column; align-items: stretch; }
@@ -758,7 +981,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 /* --------------------------------------------------------------------------
-   17. Accesibilidad · movimiento reducido
+   25. Accesibilidad · movimiento reducido
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -772,7 +995,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 @media print {
-  .nav, .footer__social, .btn-row { display: none; }
+  .nav, .footer__social, .btn-row, .wa { display: none; }
   body { color: #000; }
   .section--navy, .bloque__text, .hero { background: #fff !important; color: #000 !important; }
   .section--navy h1, .section--navy h2, .section--navy h3,

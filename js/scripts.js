@@ -1,10 +1,15 @@
 /*!
- * 3D Group — comportamiento mínimo de la página.
+ * 3D Group — comportamiento de la página.
  * Kit de marca v1.0: un solo momento de movimiento (la franja diagonal
- * al cargar, resuelto en CSS). Aquí sólo navegación y estado.
+ * al cargar, resuelto en CSS). Aquí sólo navegación y formulario.
  */
 (function () {
   "use strict";
+
+  /* --- Datos de contacto (único lugar donde se editan) ------------------ */
+  var CONTACTO = {
+    correo: "contacto@3dgroup.cl"
+  };
 
   var nav = document.getElementById("nav");
   var toggle = document.getElementById("navToggle");
@@ -51,7 +56,7 @@
     onScroll();
   }
 
-  /* --- Enlace activo según la sección visible --------------------------- */
+  /* --- Enlace activo dentro de una misma página (anclas) ---------------- */
   var links = Array.prototype.slice.call(
     document.querySelectorAll('.nav__menu ul a[href^="#"]')
   );
@@ -75,6 +80,42 @@
       { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
     );
     sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  /* --- Formulario de cotización ----------------------------------------
+     El sitio es estático (GitHub Pages, sin backend), así que el formulario
+     redacta el correo y lo abre en el cliente de la persona. No se envía
+     nada a terceros ni se almacena ningún dato.
+     -------------------------------------------------------------------- */
+  var form = document.getElementById("cotizaForm");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = function (id) {
+        var el = document.getElementById(id);
+        return el && el.value ? el.value.trim() : "";
+      };
+
+      var cuerpo = [
+        "Nombre: " + v("nombre"),
+        "Empresa: " + (v("empresa") || "—"),
+        "Correo: " + v("email"),
+        "Teléfono: " + (v("telefono") || "—"),
+        "Tipo de recinto: " + v("recinto"),
+        "Servicio: " + v("servicio"),
+        "",
+        "Detalle:",
+        v("mensaje") || "—"
+      ].join("\n");
+
+      var asunto = "Cotización · " + v("servicio") + " · " + (v("empresa") || v("nombre"));
+
+      window.location.assign(
+        "mailto:" + CONTACTO.correo +
+        "?subject=" + encodeURIComponent(asunto) +
+        "&body=" + encodeURIComponent(cuerpo)
+      );
+    });
   }
 
   /* --- Año en el footer -------------------------------------------------- */
