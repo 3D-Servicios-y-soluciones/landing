@@ -440,7 +440,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   margin-top: 2.5rem;
 }
 .segmentos li {
-  padding: 0.5rem 1rem;
   border: 1px solid var(--gris-borde);
   border-left: 3px solid var(--celeste);
   border-radius: var(--radius);
@@ -449,6 +448,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-weight: 600;
   color: var(--navy);
 }
+.segmentos li,
+.segmentos li > a { padding: 0.5rem 1rem; }
+.segmentos li:has(> a) { padding: 0; }
+.segmentos li > a { display: block; color: inherit; }
+.segmentos li:hover:has(> a) { background: var(--navy); border-color: var(--navy); }
+.segmentos li:hover > a { color: var(--blanco); text-decoration: none; }
+.section--gris .segmentos li { background: var(--blanco); }
 
 .pilares {
   display: grid;
@@ -631,31 +637,40 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .footer {
   background: var(--navy-900);
   color: rgba(255, 255, 255, 0.62);
-  padding-block: 2.75rem;
+  padding-block: clamp(2.5rem, 5vw, 3.5rem);
 }
-.footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem 2.5rem;
+.footer__cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem 3rem;
 }
-.footer__logo { width: auto; height: 30px; flex: none; }
+.footer__logo { width: auto; height: 30px; margin-bottom: 1.1rem; }
+.footer__legal { margin: 0; font-size: 0.82rem; line-height: 1.7; }
 
-.footer__legal {
-  margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.7;
-  flex: 1 1 260px;
+.footer h3 {
+  color: var(--blanco);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
-.footer a { color: rgba(255, 255, 255, 0.82); }
+.footer__links li { padding-block: 0.32rem; font-size: 0.85rem; }
+.footer a { color: rgba(255, 255, 255, 0.72); }
 .footer a:hover { color: var(--celeste); }
+
+.footer__base {
+  margin: clamp(2rem, 4vw, 2.75rem) 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.78rem;
+}
 
 .footer__social {
   display: grid;
   place-items: center;
   width: 42px;
   height: 42px;
-  margin-left: auto;
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius);
   transition: background-color 0.18s ease, border-color 0.18s ease;
@@ -909,7 +924,259 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .canal a { font-weight: 600; word-break: break-word; }
 
 /* --------------------------------------------------------------------------
-   24. Responsive
+   24. Corte diagonal entre secciones
+   La franja es la firma de la marca. Aquí deja de ser textura de esquina y
+   pasa a ser la transición real entre bloques: es lo que hace que el sitio
+   se reconozca aunque le quites el logo.
+   -------------------------------------------------------------------------- */
+.corte {
+  position: relative;
+  height: clamp(40px, 5vw, 72px);
+  overflow: hidden;
+  background: var(--blanco);
+}
+.corte::before {
+  content: "";
+  position: absolute;
+  inset: -2px 0;
+  background: var(--navy);
+  clip-path: polygon(0 0, 100% 0, 100% 38%, 0 100%);
+}
+/* Invertido: de navy hacia el fondo claro */
+.corte--sube { background: var(--navy); }
+.corte--sube::before {
+  background: var(--blanco);
+  clip-path: polygon(0 100%, 100% 62%, 100% 100%, 0 100%);
+}
+.corte--gris { background: var(--gris-fondo); }
+.corte--sube.corte--gris::before { background: var(--gris-fondo); }
+
+/* Filo celeste sobre el corte: el detalle que lo vuelve deliberado */
+.corte::after {
+  content: "";
+  position: absolute;
+  inset: -2px 0;
+  background: var(--celeste);
+  clip-path: polygon(0 100%, 100% 38%, 100% 41%, 0 100%);
+  opacity: 0.55;
+}
+.corte--sube::after {
+  clip-path: polygon(0 100%, 100% 62%, 100% 59%, 0 100%);
+}
+
+/* --------------------------------------------------------------------------
+   25. Barra de contacto directo en la cabecera
+   -------------------------------------------------------------------------- */
+.nav__tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--blanco);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.nav__tel:hover { color: var(--celeste); text-decoration: none; }
+.nav__tel svg { width: 15px; height: 15px; fill: var(--celeste); flex: none; }
+
+/* --------------------------------------------------------------------------
+   26. Clientes
+   -------------------------------------------------------------------------- */
+.clientes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+.clientes li {
+  padding: 0.7rem 1.15rem;
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-left: 3px solid var(--celeste);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.section--navy .clientes li {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.22);
+  border-left-color: var(--celeste);
+  color: var(--blanco);
+}
+
+/* --------------------------------------------------------------------------
+   27. Configurador · «Arma tu requerimiento»
+   -------------------------------------------------------------------------- */
+.wz {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3.5vw, 2.75rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.wz__pasos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.wz__n {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  opacity: 0.55;
+}
+.wz__n.is-on { color: var(--navy); opacity: 1; }
+.wz__n + .wz__n::before { content: "·"; margin-right: 0.5rem; opacity: 0.5; }
+
+.wz__progreso {
+  height: 4px;
+  background: var(--gris-borde);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.wz__progreso i {
+  display: block;
+  height: 100%;
+  width: 25%;
+  background: var(--celeste);
+  transition: width 0.28s ease;
+}
+
+.wz__paso h3 { margin-bottom: 1.2em; outline: none; }
+.wz__paso[hidden] { display: none; }
+
+.wz__ops {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.85rem;
+}
+.wz__op {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.15rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  border-left: 3px solid var(--celeste);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+.wz__op:hover { background: var(--navy); border-color: var(--navy); color: var(--blanco); }
+.wz__op[aria-pressed="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  border-left-color: var(--rojo);
+  color: var(--blanco);
+}
+.wz__op small { display: block; font-weight: 400; font-size: 0.79rem; opacity: 0.8; margin-top: 0.15rem; }
+
+.wz__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gris-borde);
+}
+.wz__atras {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  cursor: pointer;
+}
+.wz__atras:hover { color: var(--navy); }
+
+.wz__resumen {
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--navy);
+  border-radius: var(--radius);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.92rem;
+  line-height: 1.9;
+  white-space: pre-line;
+}
+
+/* --------------------------------------------------------------------------
+   28. Estados del formulario
+   -------------------------------------------------------------------------- */
+.form__estado {
+  grid-column: 1 / -1;
+  padding: 0.9rem 1.15rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--celeste);
+  background: var(--blanco);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.form__estado.is-ok { border-left-color: #1a7f4b; color: #14603a; }
+.form__estado.is-error { border-left-color: var(--rojo); color: #a3050e; }
+
+.form__acciones {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+.btn--wa {
+  background: #25d366;
+  border-color: #25d366;
+  color: #0b3d22;
+}
+.btn--wa:hover { background: #1eb857; border-color: #1eb857; }
+.btn--wa svg { width: 17px; height: 17px; fill: currentColor; margin-right: 0.5rem; }
+
+.promesa {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+}
+.section--navy .promesa,
+.cta-band .promesa { color: var(--celeste); }
+
+/* --------------------------------------------------------------------------
+   29. Descarga (imán de leads)
+   -------------------------------------------------------------------------- */
+.descarga {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  border-left: 4px solid var(--rojo);
+  border-radius: var(--radius);
+}
+.descarga__ico { width: 40px; height: 40px; fill: var(--navy); flex: none; }
+.descarga h3 { margin-bottom: 0.3em; }
+.descarga p { font-size: 0.9rem; margin: 0; }
+
+/* --------------------------------------------------------------------------
+   30. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 960px) {
   html { scroll-padding-top: 80px; }
@@ -966,10 +1233,16 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .nav__menu ul a[aria-current="page"] { border-bottom-color: var(--celeste); }
 
   .cta-band__inner { flex-direction: column; align-items: flex-start; }
+  .nav__tel { display: none; }
+  .footer__cols { grid-template-columns: 1fr 1fr; }
+  .descarga { grid-template-columns: 1fr; text-align: left; }
 }
 
 @media (max-width: 560px) {
   .form { grid-template-columns: 1fr; }
+  .footer__cols { grid-template-columns: 1fr; gap: 2rem; }
+  .wz__ops { grid-template-columns: 1fr; }
+  .form__acciones > .btn { width: 100%; }
 
   /* En pantallas chicas el botón de WhatsApp se reduce al ícono */
   .wa { padding: 0.9rem; }
@@ -977,11 +1250,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .servicios__foot { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
   .btn-row { flex-direction: column; align-items: stretch; }
-  .footer__social { margin-left: 0; }
 }
 
 /* --------------------------------------------------------------------------
-   25. Accesibilidad · movimiento reducido
+   31. Accesibilidad · movimiento reducido
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -995,7 +1267,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 @media print {
-  .nav, .footer__social, .btn-row, .wa { display: none; }
+  .nav, .footer__social, .btn-row, .wa, .corte { display: none; }
   body { color: #000; }
   .section--navy, .bloque__text, .hero { background: #fff !important; color: #000 !important; }
   .section--navy h1, .section--navy h2, .section--navy h3,
