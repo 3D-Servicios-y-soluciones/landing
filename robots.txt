@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# Panel interno: fuera de buscadores. Se protege con Cloudflare Access.
+Disallow: /admin/
 
 Sitemap: https://www.3dgroup.cl/sitemap.xml

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel · 3D Group</title>
+
+    <!-- Página interna: fuera de buscadores. La protección real va en
+         Cloudflare Access, no aquí. -->
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#27367B" />
+
+    <link rel="icon" href="../assets/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <link href="../css/styles.css" rel="stylesheet" />
+</head>
+
+<body class="admin">
+
+    <header class="admin__bar">
+        <div class="shell">
+            <img src="../assets/img/logo-blanco.png" alt="3D Group" width="2460" height="434" />
+            <span class="admin__tag">Panel interno</span>
+            <a class="admin__salir" href="../index.html">Ir al sitio &rarr;</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="shell">
+
+            <!-- Estado de cada pieza, leído de js/config.js -->
+            <section aria-labelledby="h-estado">
+                <h1 id="h-estado" style="font-size:1.5rem; margin-bottom:1.2rem;">Estado del sitio</h1>
+                <div class="estado" id="estado"></div>
+            </section>
+
+            <!-- Tablero de analítica -->
+            <section class="tablero" aria-labelledby="h-tablero">
+                <div class="tablero__cab">
+                    <h2 id="h-tablero">Analítica</h2>
+                    <span id="tableroFuente" class="admin__tag" style="color:var(--navy); border-color:var(--gris-borde);"></span>
+                </div>
+                <div id="tablero"></div>
+            </section>
+
+            <div class="admin__cols">
+
+                <section class="tarjeta" aria-labelledby="h-accesos">
+                    <h2 id="h-accesos">Accesos</h2>
+                    <ul id="accesos"></ul>
+                </section>
+
+                <section class="tarjeta" aria-labelledby="h-leer">
+                    <h2 id="h-leer">Qué mirar cada semana</h2>
+                    <ul>
+                        <li>
+                            <strong>Clics en WhatsApp</strong>
+                            <small>Es tu métrica de leads, no las visitas. Una página con muchas
+                                visitas y cero clics tiene un problema de mensaje, no de tráfico.</small>
+                        </li>
+                        <li>
+                            <strong>Qué página los genera</strong>
+                            <small>Si las páginas por segmento convierten mejor que el inicio,
+                                conviene invertir ahí y crear más.</small>
+                        </li>
+                        <li>
+                            <strong>Configurador completado vs. iniciado</strong>
+                            <small>Si mucha gente parte y pocos terminan, el paso donde abandonan
+                                está pidiendo algo que no saben responder.</small>
+                        </li>
+                        <li>
+                            <strong>De dónde llegan</strong>
+                            <small>Búsqueda, directo o Perfil de Empresa. Para un servicio local
+                                el perfil de Google suele traer más que el sitio.</small>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="tarjeta" aria-labelledby="h-pend">
+                    <h2 id="h-pend">Pendientes del sitio</h2>
+                    <ul>
+                        <li><strong>Testimonios</strong>
+                            <small>Dos o tres, con nombre, cargo, empresa y autorización.</small></li>
+                        <li><strong>Cifras respaldables</strong>
+                            <small>Años, m² bajo contrato, dotación, clientes activos.</small></li>
+                        <li><strong>Certificaciones</strong>
+                            <small>OS-10, mutualidad, trabajo en altura.</small></li>
+                        <li><strong>Fotos antes / después</strong>
+                            <small>Pares del mismo encuadre, para el deslizador.</small></li>
+                        <li><strong>Promesa de respuesta</strong>
+                            <small>Un plazo que se pueda cumplir siempre.</small></li>
+                    </ul>
+                </section>
+
+            </div>
+
+            <section class="aviso" aria-labelledby="h-seg">
+                <h2 id="h-seg">Cómo se protege esta página</h2>
+                <p>
+                    El sitio es estático: se sirve desde GitHub Pages, sin servidor propio. Eso
+                    significa que <strong>una contraseña escrita en el código sería visible para
+                    cualquiera</strong> que abra «ver código fuente». Por eso aquí no hay ninguna.
+                </p>
+                <p>
+                    La protección de verdad va antes, en Cloudflare, que ya está delante de tu
+                    dominio: <strong>Zero Trust → Access → Applications</strong>, agrega una
+                    aplicación autoalojada para la ruta <code>www.3dgroup.cl/admin</code> y una
+                    política que permita sólo tu correo. Cloudflare pedirá un código de acceso
+                    antes de servir esta página. Es gratis hasta 50 usuarios.
+                </p>
+                <p>
+                    Mientras tanto: esta página no está en el sitemap, lleva
+                    <code>noindex</code> y está bloqueada en <code>robots.txt</code>, así que no
+                    aparecerá en buscadores. Y no guarda ningún dato — sólo muestra tableros que
+                    llevan su propia autenticación.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script>
+        (function () {
+            "use strict";
+            var CFG = window.CONFIG_3D || {};
+            var P = CFG.panel || {};
+            var A = CFG.analitica || {};
+
+            function el(t, c, h) {
+                var n = document.createElement(t);
+                if (c) n.className = c;
+                if (h !== undefined) n.innerHTML = h;
+                return n;
+            }
+
+            /* --- Estado --- */
+            var items = [
+                ["Analítica", A.tipo && A.id,
+                 A.tipo ? (A.tipo === "ga4" ? "Google Analytics" : "Plausible") : "Sin configurar",
+                 A.tipo ? "Registrando eventos de contacto." :
+                 "Elige una en js/config.js. Sin esto no hay datos que mirar."],
+                ["Formulario", CFG.formEndpoint, CFG.formEndpoint ? "Recibe por correo" : "Sólo WhatsApp",
+                 CFG.formEndpoint ? "Las solicitudes quedan registradas." :
+                 "Funciona por WhatsApp. Con un endpoint además llegan por correo."],
+                ["Tablero", P.plausible || P.looker, (P.plausible || P.looker) ? "Conectado" : "Sin conectar",
+                 (P.plausible || P.looker) ? "Se muestra más abajo." :
+                 "Pega la URL del tablero en js/config.js para verlo aquí."]
+            ];
+            var cont = document.getElementById("estado");
+            items.forEach(function (it) {
+                var d = el("div", "estado__item " + (it[1] ? "is-ok" : "is-off"));
+                d.appendChild(el("span", "estado__k", it[0]));
+                d.appendChild(el("span", "estado__v", it[2]));
+                d.appendChild(el("small", "estado__n", it[3]));
+                cont.appendChild(d);
+            });
+
+            /* --- Tablero --- */
+            var caja = document.getElementById("tablero");
+            var fuente = document.getElementById("tableroFuente");
+            var url = P.plausible || P.looker;
+
+            if (url) {
+                fuente.textContent = P.plausible ? "Plausible" : "Looker Studio";
+                var f = el("iframe");
+                f.setAttribute("src", url);
+                f.setAttribute("title", "Tablero de analítica");
+                f.setAttribute("loading", "lazy");
+                f.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+                f.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-forms");
+                caja.appendChild(f);
+            } else {
+                fuente.textContent = "Sin conectar";
+                caja.appendChild(el("div", "vacio",
+                    '<h3>Todavía no hay nada que mostrar</h3>' +
+                    '<p>El panel no recoge datos por su cuenta: muestra el tablero de la ' +
+                    'herramienta que midas el sitio. Dos caminos, ambos gratis para tu volumen.</p>' +
+                    '<ol>' +
+                    '<li><strong>Plausible</strong> — sin cookies, así que no necesitas banner de ' +
+                    'aviso. Crea la cuenta, pon <code>analitica: { tipo: "plausible", id: ' +
+                    '"www.3dgroup.cl" }</code> en <code>js/config.js</code>, y en ' +
+                    '<em>Site Settings → Visibility</em> genera un <em>shared link</em> con ' +
+                    'contraseña. Pega esa URL en <code>panel.plausible</code>.</li>' +
+                    '<li><strong>Google Analytics</strong> — gratis y más completo, pero exige ' +
+                    'aviso de cookies. Pon <code>analitica: { tipo: "ga4", id: "G-XXXXXXXXXX" }</code>, ' +
+                    'arma un informe en Looker Studio y pega su URL de inserción en ' +
+                    '<code>panel.looker</code>.</li>' +
+                    '<li>Sube el cambio y recuerda <strong>purgar la caché de Cloudflare</strong>.</li>' +
+                    '</ol>'));
+            }
+
+            /* --- Accesos --- */
+            var accesos = [
+                [P.plausible || (A.tipo === "ga4" ? "https://analytics.google.com/" : ""),
+                 "Analítica completa", "El tablero con todos los informes."],
+                [P.formularios, "Bandeja del formulario", "Solicitudes recibidas por el sitio."],
+                [P.buscadores, "Google Search Console", "Qué se busca para llegar al sitio."],
+                [P.negocio, "Perfil de Empresa de Google", "Suele traer más contactos que la web."],
+                ["https://github.com/3D-Servicios-y-soluciones/landing", "Repositorio",
+                 "El código del sitio y su historial."],
+                ["https://dash.cloudflare.com/", "Cloudflare",
+                 "Purga la caché aquí después de cada cambio."]
+            ];
+            var ul = document.getElementById("accesos");
+            accesos.forEach(function (a) {
+                var li = el("li");
+                if (a[0]) {
+                    var link = el("a", null, a[1]);
+                    link.href = a[0];
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    li.appendChild(link);
+                } else {
+                    li.appendChild(el("strong", null, a[1] + " · sin configurar"));
+                }
+                li.appendChild(el("small", null, a[2]));
+                ul.appendChild(li);
+            });
+        })();
+    </script>
+</body>
+
+</html>

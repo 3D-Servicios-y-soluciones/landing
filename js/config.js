@@ -31,6 +31,25 @@ window.CONFIG_3D = {
      -------------------------------------------------------------------- */
   analitica: { tipo: "", id: "" },
 
+  /* --- Panel interno (/admin) ------------------------------------------
+     El panel no guarda datos: sólo muestra los tableros de las herramientas
+     que ya usas. Cada uno lleva SU PROPIA autenticación, que es lo que de
+     verdad protege la información.
+
+     plausible : Plausible → Site Settings → Visibility → Shared link.
+                 Ponle contraseña ahí mismo. Pega la URL completa.
+     looker    : informe de Looker Studio conectado a GA4, compartido sólo
+                 con tu cuenta de Google. Usa la URL de «Insertar».
+     formularios: la bandeja de Formspree donde llegan las solicitudes.
+     -------------------------------------------------------------------- */
+  panel: {
+    plausible: "",
+    looker: "",
+    formularios: "",
+    buscadores: "https://search.google.com/search-console",
+    negocio: "https://www.google.com/business/"
+  },
+
   /* --- Promesa de respuesta --------------------------------------------
      Aparece junto a los botones de contacto. Déjalo vacío mientras no haya
      un plazo que se pueda cumplir siempre: prometer y fallar cuesta más que
