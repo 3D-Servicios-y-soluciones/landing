@@ -1,0 +1,127 @@
+# Deja /admin cerrado detrás de Cloudflare Access.
+#
+# Access se interpone ANTES de que la página se sirva: quien entre a
+# www.3dgroup.cl/admin recibe una pantalla de Cloudflare que le pide un
+# código enviado por correo. Sin ese código la página no se entrega.
+# Es la única protección real posible en un sitio estático sin servidor.
+#
+# Se ejecuta a mano (Actions → este flujo → Run workflow). Es idempotente:
+# si la aplicación ya existe, actualiza la política en vez de duplicarla.
+#
+# Secretos necesarios:
+#   CLOUDFLARE_API_TOKEN   · permiso Account → Access: Apps and Policies → Edit
+#   CLOUDFLARE_ACCOUNT_ID  · ID de la cuenta (Overview del dominio, columna derecha)
+#
+# Requisito previo: haber abierto Zero Trust en Cloudflare al menos una vez
+# y elegido un nombre de equipo. Ese primer paso no se puede hacer por API.
+
+name: Proteger /admin con Cloudflare Access
+
+on:
+  workflow_dispatch:
+    inputs:
+      correos:
+        description: "Correos autorizados, separados por coma"
+        required: true
+        default: "diego.osorio@3dgroup.cl"
+      dominio:
+        description: "Ruta a proteger"
+        required: true
+        default: "www.3dgroup.cl/admin"
+
+permissions:
+  contents: read
+
+jobs:
+  proteger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Comprobar que los secretos están configurados
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CUENTA: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "$CUENTA" ]; then
+            echo "::error::Faltan CLOUDFLARE_API_TOKEN o CLOUDFLARE_ACCOUNT_ID en los secretos."
+            exit 1
+          fi
+
+      - name: Crear o actualizar la protección
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CUENTA: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CORREOS: ${{ inputs.correos }}
+          DOMINIO: ${{ inputs.dominio }}
+        run: |
+          set -euo pipefail
+          BASE="https://api.cloudflare.com/client/v4/accounts/${CUENTA}/access"
+          AUTH=(-H "Authorization: Bearer ${TOKEN}" -H "Content-Type: application/json")
+
+          fallar_si_error() {
+            if [ "$(echo "$1" | jq -r '.success')" != "true" ]; then
+              echo "::error::$2"
+              echo "$1" | jq -r '.errors[]? | "  - \(.code): \(.message)"'
+              exit 1
+            fi
+          }
+
+          # ¿Ya existe una aplicación para esta ruta?
+          apps=$(curl -sS "${AUTH[@]}" "${BASE}/apps")
+          fallar_si_error "$apps" "No se pudo listar las aplicaciones de Access. Revisa el token y que Zero Trust esté iniciado."
+
+          app_id=$(echo "$apps" | jq -r --arg d "$DOMINIO" \
+            '.result[]? | select(.domain == $d) | .id' | head -n1)
+
+          cuerpo=$(jq -n --arg d "$DOMINIO" '{
+            name: "Panel interno 3D Group",
+            domain: $d,
+            type: "self_hosted",
+            session_duration: "24h",
+            app_launcher_visible: false,
+            auto_redirect_to_identity: false
+          }')
+
+          if [ -z "$app_id" ]; then
+            echo "Creando la aplicación para ${DOMINIO}…"
+            r=$(curl -sS -X POST "${AUTH[@]}" "${BASE}/apps" --data "$cuerpo")
+            fallar_si_error "$r" "No se pudo crear la aplicación de Access."
+            app_id=$(echo "$r" | jq -r '.result.id')
+          else
+            echo "La aplicación ya existía (${app_id}); actualizándola…"
+            r=$(curl -sS -X PUT "${AUTH[@]}" "${BASE}/apps/${app_id}" --data "$cuerpo")
+            fallar_si_error "$r" "No se pudo actualizar la aplicación de Access."
+          fi
+
+          # Política: permitir sólo los correos indicados.
+          incluir=$(echo "$CORREOS" | jq -R 'split(",") | map({email:{email:(.|gsub("^\\s+|\\s+$";""))}})')
+          pol=$(jq -n --argjson inc "$incluir" '{
+            name: "Correos autorizados",
+            decision: "allow",
+            include: $inc
+          }')
+
+          pols=$(curl -sS "${AUTH[@]}" "${BASE}/apps/${app_id}/policies")
+          fallar_si_error "$pols" "No se pudo listar las políticas."
+          pol_id=$(echo "$pols" | jq -r '.result[]? | select(.name == "Correos autorizados") | .id' | head -n1)
+
+          if [ -z "$pol_id" ]; then
+            r=$(curl -sS -X POST "${AUTH[@]}" "${BASE}/apps/${app_id}/policies" --data "$pol")
+            fallar_si_error "$r" "No se pudo crear la política."
+          else
+            r=$(curl -sS -X PUT "${AUTH[@]}" "${BASE}/apps/${app_id}/policies/${pol_id}" --data "$pol")
+            fallar_si_error "$r" "No se pudo actualizar la política."
+          fi
+
+          {
+            echo "### /admin protegido"
+            echo ""
+            echo "- **Ruta:** \`${DOMINIO}\`"
+            echo "- **Autorizados:** ${CORREOS}"
+            echo "- **Sesión:** 24 horas"
+            echo ""
+            echo "Ahora Cloudflare pide un código por correo antes de servir la página."
+            echo "Compruébalo en una ventana de incógnito."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "Listo. ${DOMINIO} queda restringido a: ${CORREOS}"

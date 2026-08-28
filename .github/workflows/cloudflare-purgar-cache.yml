@@ -1,0 +1,64 @@
+# Purga la caché de Cloudflare cuando GitHub Pages termina de publicar.
+#
+# Sin esto hay que entrar al panel de Cloudflare a mano después de cada
+# cambio, porque Cloudflare sigue sirviendo su copia guardada aunque GitHub
+# ya tenga los archivos nuevos.
+#
+# Secretos necesarios (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN  · token con permiso Zone → Cache Purge → Purge
+#   CLOUDFLARE_ZONE_ID    · ID de la zona 3dgroup.cl (Overview del dominio)
+
+name: Purgar caché de Cloudflare
+
+on:
+  # Se dispara cuando el despliegue de Pages termina: es el momento exacto
+  # en que ya hay contenido nuevo que vale la pena ir a buscar.
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+  # Y a mano, por si hace falta forzarlo.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  purgar:
+    # En el disparo automático, sólo si el despliegue salió bien.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Comprobar que los secretos están configurados
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "$ZONE" ]; then
+            echo "::error::Faltan CLOUDFLARE_API_TOKEN o CLOUDFLARE_ZONE_ID en los secretos del repositorio."
+            echo "Ve a Settings → Secrets and variables → Actions y agrégalos."
+            exit 1
+          fi
+
+      - name: Purgar todo
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+        run: |
+          set -euo pipefail
+          respuesta=$(curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${ZONE}/purge_cache" \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+
+          if [ "$(echo "$respuesta" | jq -r '.success')" = "true" ]; then
+            echo "Caché purgada. Los cambios ya se ven en www.3dgroup.cl."
+            echo "### Caché de Cloudflare purgada" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::error::Cloudflare rechazó la purga."
+            echo "$respuesta" | jq -r '.errors[]? | "  - \(.code): \(.message)"'
+            exit 1
+          fi

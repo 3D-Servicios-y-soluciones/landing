@@ -111,10 +111,20 @@
                 </p>
                 <p>
                     La protección de verdad va antes, en Cloudflare, que ya está delante de tu
-                    dominio: <strong>Zero Trust → Access → Applications</strong>, agrega una
-                    aplicación autoalojada para la ruta <code>www.3dgroup.cl/admin</code> y una
-                    política que permita sólo tu correo. Cloudflare pedirá un código de acceso
-                    antes de servir esta página. Es gratis hasta 50 usuarios.
+                    dominio. Cloudflare pide un código de acceso antes siquiera de servir esta
+                    página. Es gratis hasta 50 usuarios.
+                </p>
+                <p>
+                    <strong>No hace falta configurarlo a mano:</strong> el repositorio incluye el
+                    flujo <em>«Proteger /admin con Cloudflare Access»</em> en la pestaña Actions
+                    de GitHub. Agrega una vez los secretos <code>CLOUDFLARE_API_TOKEN</code> y
+                    <code>CLOUDFLARE_ACCOUNT_ID</code>, ejecútalo, y queda cerrado. Es
+                    reejecutable: sirve también para cambiar quién tiene acceso.
+                </p>
+                <p>
+                    Si prefieres hacerlo por pantalla: <strong>Zero Trust → Access →
+                    Aplicaciones</strong>, agrega una aplicación <em>autoalojada</em> para
+                    <code>www.3dgroup.cl/admin</code> y una política que permita sólo tu correo.
                 </p>
                 <p>
                     Mientras tanto: esta página no está en el sitemap, lleva
@@ -207,8 +217,10 @@
                 [P.negocio, "Perfil de Empresa de Google", "Suele traer más contactos que la web."],
                 ["https://github.com/3D-Servicios-y-soluciones/landing", "Repositorio",
                  "El código del sitio y su historial."],
+                ["https://github.com/3D-Servicios-y-soluciones/landing/actions", "Flujos de GitHub",
+                 "Purga de caché automática y protección de /admin."],
                 ["https://dash.cloudflare.com/", "Cloudflare",
-                 "Purga la caché aquí después de cada cambio."]
+                 "DNS, caché y Zero Trust."]
             ];
             var ul = document.getElementById("accesos");
             accesos.forEach(function (a) {
