@@ -324,9 +324,21 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nav__cta {
   padding: 0.7rem 1.35rem;
   font-size: 0.72rem;
+  white-space: nowrap;
   border-bottom: 2px solid rgba(255, 255, 255, 0.55);
 }
 .nav__cta:hover { border-bottom-color: var(--blanco); }
+
+/* Acceso a la app de reportes (clientes y equipo) — secundario, borde celeste */
+.btn--app {
+  gap: 0.45rem;
+  background: transparent;
+  border-color: var(--celeste);
+  color: var(--blanco);
+}
+.btn--app svg { width: 14px; height: 14px; fill: var(--celeste); flex: none; }
+.btn--app:hover { background: var(--celeste); border-color: var(--celeste); color: var(--navy); }
+.btn--app:hover svg { fill: var(--navy); }
 
 .nav__toggle {
   display: none;
@@ -1343,9 +1355,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* --------------------------------------------------------------------------
    31. Responsive
    -------------------------------------------------------------------------- */
-@media (max-width: 960px) {
-  html { scroll-padding-top: 80px; }
+/* Entre 961 y 1180px el menú va justo con dos botones: se oculta el teléfono (sigue en el CTA de WhatsApp y en el footer) */
+@media (max-width: 1180px) {
+  .nav__tel { display: none; }
+}
 
+/* Menú colapsado hasta 1120px: con el botón «Acceso a la app» la barra ya no cabe en tablet horizontal */
+@media (max-width: 1120px) {
   .nav__toggle { display: block; }
 
   .nav__menu {
@@ -1373,6 +1389,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .nav__menu ul a:hover,
   .nav__menu ul a.is-active { border-bottom-color: var(--celeste); }
   .nav__cta { margin-top: 1.25rem; border-bottom-width: 2px; }
+  .nav__cta + .nav__cta { margin-top: 0.75rem; }
+  .nav__menu ul a[aria-current="page"] { border-bottom-color: var(--celeste); }
+}
+
+@media (max-width: 960px) {
+  html { scroll-padding-top: 80px; }
+
 
   .hero__grid { grid-template-columns: 1fr; min-height: 0; }
   .hero__text {
@@ -1395,7 +1418,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .bloque--flip .bloque__text { grid-column: 1; grid-row: auto; }
   .bloque__media { min-height: clamp(240px, 56vw, 380px); }
 
-  .nav__menu ul a[aria-current="page"] { border-bottom-color: var(--celeste); }
 
   .cta-band__inner { flex-direction: column; align-items: flex-start; }
   .nav__tel { display: none; }
